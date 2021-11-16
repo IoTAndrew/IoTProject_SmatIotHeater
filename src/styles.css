@@ -5,3 +5,7 @@
 .AuthForm {
     @apply content-center
 } 
+
+.header {
+    @apply flex justify-start p-8 
+}
