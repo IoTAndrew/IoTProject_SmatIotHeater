@@ -32244,16 +32244,6 @@ video {
   content: none;
 }
 
-.AuthForm {
-  align-content: center
-}
-
-.header {
-  display: flex;
-  justify-content: flex-start;
-  padding: 2rem
-}
-
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -188388,3 +188378,4 @@ video {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
+
