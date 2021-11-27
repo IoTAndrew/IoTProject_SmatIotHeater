@@ -17,4 +17,16 @@ app.get("/create", (req, res) => {
     res.sendFile(path.join(__dirname, 'public/user.html'))
 })
 
+app.get("/logs", (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/logs.html'))
+})
+
+app.get("/settings", (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/settings.html'))
+})
+
+app.get("/about", (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/about.html'))
+})
+
 app.listen(3000);

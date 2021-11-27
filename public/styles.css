@@ -32244,6 +32244,39 @@ video {
   content: none;
 }
 
+  .cls-1{
+  fill:#fff;
+}
+
+.cls-1,.cls-2,.cls-3,.cls-4,.cls-5,.cls-6,.cls-7{
+  stroke:#272525;
+  stroke-miterlimit:10;
+}
+
+.cls-2{
+  fill:none;
+}
+
+.cls-3{
+  fill:#dbeefc;
+}
+
+.cls-4{
+  fill:#ebeae0;
+}
+
+.cls-5{
+  fill:#c35f38;
+}
+
+.cls-6{
+  fill:#989a9c;
+}
+
+.cls-7{
+  fill:#545452;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -188378,4 +188411,3 @@ video {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
-
