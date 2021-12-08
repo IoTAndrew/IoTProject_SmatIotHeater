@@ -37,13 +37,13 @@
     </form>
 </div>
 
-    <div class="p-4 space-y-4">
-        <div class="flex items-start space-x-16">
-            <div class="inline-flex box rounded bg-white h-screen w-auto shadow items-center p-4">
-                <div class="container" style="height: 30vh; width: 40vw;">
+    <div class="p-4 space-y-0.5">
+        <div class="flex items-start">
+            <div class="flex box rounded bg-white w-auto h-auto shadow items-center p-8">
+                <div class="container" style="height: 40vh; width: 40vw;">
                     <canvas id="tempChart"></canvas>
                 </div>
-                <div class="flex">
+                <div class="flex spacing-y-64 p-4 font-bold text-xl text-black block uppercase tracking-wide">
                     Current temperature: 16
                     <br>
                     Outside temperature: -16
@@ -53,38 +53,47 @@
 
         <form class="space-y-2">
             <div class="flex mt-32 space-x-8">
-
                 <div>
                     <label class="flex-row items-center">
-                        Set Minimum Temperature:
-                        <div class="flex justify-center place-content-center"><span id="minTemp"></span></div>
-                        <div class="flex justify-center p-4">
-                            <input type="range" min="0" max="10" value="0" class="range range-lg" id="minTempSlider">
+                        <div class="box bg-white rounded shadow h-auto w-auto">
+                            <div class="p-2 p-4 font-bold text-lg text-black block uppercase tracking-wide">
+                                Set Minimum Temperature:
+                                <div class="flex justify-center place-content-center"><span id="minTemp"></span></div>
+                                <div class="flex justify-center p-4">
+                                    <input type="range" min="0" max="10" value="0" class="range range-lg" id="minTempSlider">
+                                </div>
+                            </div>
                         </div>
                     </label>
                 </div>
 
                 <div>
                     <label class="flex-row items-center">
-                        Set Target Temperature:
-                        <div class="flex justify-center place-content-center"><span id="maxTemp"></span></div>
-                        <div class="flex justify-center p-4">
-                            <input type="range" min="0" max="24" value="0" class="range range-lg" id="maxTempSlider">
+                        <div class="box bg-white rounded shadow h-auto w-auto">
+                            <div class="p-2 p-4 font-bold text-lg text-black block uppercase tracking-wide">
+                                Set Target Temperature:
+                                    <div class="flex justify-center place-content-center"><span id="maxTemp"></span></div>
+                                    <div class="flex justify-center p-4">
+                                        <input type="range" min="0" max="24" value="0" class="range range-lg" id="maxTempSlider">
+                                    </div>
+                            </div>
                         </div>
                     </label>
                 </div>
 
                 <div class="flex-row">
-                    <label for="TargetTime">Target date and time:</label>
-                    <input type="datetime-local" class="flex rounded shadow border" id="TargetTime" name="TargetTime">
-                </div>
-
-                <div class="flex">
+                    <div class="box bg-white rounded shadow h-auto w-auto">
+                        <div class="p-2 p-4 font-bold text-lg text-black block uppercase tracking-wide">
+                            <label for="TargetTime">Target date and time:</label>
+                            <input type="datetime-local" class="flex rounded shadow border" id="TargetTime" name="TargetTime">
+                        </div>
+                    </div>
+                    <div class="py-2.5">
                     <button class="shadow bg-yellow-300 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-black font-bold py-2 px-4 rounded" type="submit">
                         I'm Coming Home!
                     </button>
+                    </div>
                 </div>
-
             </div>
         </form>
 
@@ -108,7 +117,7 @@
         data: {
             labels:['1','2','3','4','5'],
             datasets:[{
-                label:'Temperature',
+                label:'TEMPERATURE',
                 data:[120, 111, 65, 25, 50],
                 backgroundColor: '#FBBF24',
                 borderColor:'#FBBF24',
@@ -130,17 +139,15 @@
                             color: '#FBBF24',
                             font: {
                                 weight: 'bold',
-                                family: 'sans-serif',
                                 size: 20
                             }
                         },
                         title: {
                             display: true,
-                            text: 'Realtime Temperature Data',
+                            text: 'REALTIME TEMPERATURE DATA',
                             color: 'black',
                             font: {
                                 weight: 'bold',
-                                family: 'sans-serif',
                                 size: 20
 
                             }
