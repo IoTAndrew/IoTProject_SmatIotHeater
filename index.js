@@ -87,6 +87,11 @@ app.delete('/logout', (req, res) => {
     res.redirect('/')
 })
 
+app.get('/api:id', async (req, res) => {
+    const id = await db.getUser(req.params.id, req.body)
+
+})
+
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
