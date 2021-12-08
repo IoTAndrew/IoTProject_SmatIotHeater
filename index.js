@@ -14,6 +14,7 @@ const bodyParser = require('body-parser')
 const db = require('./db/users')
 
 const initializePassport = require('./passport-config')
+const req = require("express");
 initializePassport(
     passport,
     email => users.find(user => user.email === email),
@@ -22,6 +23,9 @@ initializePassport(
 
 //this will hold stuff pulled from the db
 let users = []
+
+//this will hold current user id
+let userid, userEmail
 
 app.use("/public", express.static(path.join(__dirname,'public')))
 app.use(bodyParser.urlencoded({extended: false}))
@@ -37,18 +41,25 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
 
-app.get("/",checkNotAuthenticated , async (req,res) => {
+app.get("/", checkNotAuthenticated , async (req,res) => {
     users = await db.getAllUsers()
     res.sendFile(path.join(__dirname,'public/auth.html'))
 })
 
-app.post("/", checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/home',
-    failureRedirect: '/',
-    failureFlash: true
-}))
+//app.post("/", checkNotAuthenticated, (req), passport.authenticate('local', {
+  //  successRedirect: '/home',
+  //  failureRedirect: '/',
+  //  failureFlash: true
+//}))
 
-app.get("/home", (req, res) => {
+app.post("/", checkNotAuthenticated, passport.authenticate('local', function (req,res) {
+    userEmail = req.user
+    console.log(userEmail)
+    res.redirect('/home')
+    })
+)
+
+app.get("/home", checkAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
@@ -64,7 +75,7 @@ app.post("/create", checkNotAuthenticated, async (req,res) => {
             name: req.body.name,
             email: req.body.email,
             location: req.body.location,
-            password: hashedPassword
+            password: hashedPassword,
         })
         console.log("Added to DB")
         res.redirect("/")
@@ -87,9 +98,10 @@ app.delete('/logout', (req, res) => {
     res.redirect('/')
 })
 
-app.get('/api:id', async (req, res) => {
+//specifically made for giving data to the board
+app.get('/api/:id', async (req, res) => {
     const id = await db.getUser(req.params.id, req.body)
-
+    res.status(200).json({id})
 })
 
 function checkAuthenticated(req, res, next) {
@@ -105,6 +117,11 @@ function checkNotAuthenticated(req, res, next) {
         return res.redirect('/')
     }
     next()
+}
+
+function getUserEmail(string) {
+    userEmail = string
+    console.log(userEmail)
 }
 
 app.listen(3000);
