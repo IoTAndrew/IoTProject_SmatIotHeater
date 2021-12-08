@@ -18,8 +18,10 @@
   </div>
   
   <nav class="py-8">
+      <a href="http://localhost:3000/home" class="block py-2.5 px-4 transition duration-200 hover:bg-blue-400 rounded hover:text-white font-bold">Home</a>
     <a href="http://localhost:3000/settings" class="block py-2.5 px-4 transition duration-200 hover:bg-blue-400 rounded hover:text-white font-bold">Settings</a>
     <a href="http://localhost:3000/about" class="block py-2.5 px-4 transition duration-200 hover:bg-blue-400 rounded hover:text-white font-bold">About</a>
+
     
     <a href="http://localhost:3000/">
       <div class="flex flex-wrap content-evenly py-2.5 px-4 transition duration-200 hover:bg-blue-400 rounded hover:text-white font-bold">
@@ -29,46 +31,55 @@
     </a>
   </nav>
 </div>
-    
-    <div class="p-4">
 
+    <div class="p-4">
         <form>
             <div class="mt-4">
-
-                <div>
-                <label class="inline-flex items-center">
-                    <input type="checkbox" id="notifications" class="form-checkbox" checked>
-                    <span class="ml-2">Enable Email Notifications.</span>
-                </label>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="NewEmail">
+                            New Email
+                        </label>
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-400" name="NewEmail" id="NewEmail" type="text">
+                    </div>
                 </div>
-
-                <div>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="NewPassword">
+                            New Password
+                        </label>
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-400" name="NewPassword" id="NewPassword" type="password" required>
+                        <p class="py-2 text-gray-800 text-xs italic">Recommended: Longer than 8 characters with numbers, capital letters, and unique characters.</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="NewLocation">
+                            New Location
+                        </label>
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-400" name="NewLocation" id="NewLocation" type="text" required>
+                    </div>
+                </div>
+                <div class="py-2 spacing-y-2">
                     <label class="inline-flex items-center">
-                        Reset Password:
-                        <input type="text" class="ml-8 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-400">
+                        <input type="checkbox" id="notifications" class="form-checkbox">
+                        <span class="ml-2 text-gray-800 text-xs italic font-bold">Disable Email Notifications.</span>
                     </label>
                 </div>
-
-                <div>
-                    <label class="inline-flex items-center">
-                        Update E-mail:
-                        <input type="text" class="ml-8 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-400">
-                    </label>
+                <div class="py-2 spacing-y-2">
+                    <span class="block uppercase tracking-wide text-gray-700 text-s font-bold mb-2 inline-flex items-center">
+                        Instructions for usage can be found here:
+                        <a href="/">&nbsp;Click Here</a>
+                        <br>
+                    </span>
                 </div>
-
-                <div>
-                    <label class="inline-flex items-center">
-                        Update location:
-                        <input type="text" class="ml-8 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-400">
-                    </label>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <button class="shadow bg-yellow-300 focus:shadow-outline focus:outline-none text-black font-bold py-2 px-4 rounded" type="submit">
+                            Submit Changes
+                        </button>
+                    </div>
                 </div>
-
-                <div>
-                    <button class="shadow bg-yellow-300 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-black font-bold py-2 px-4 rounded" type="submit">
-                        Submit Changes
-                    </button>
-                </div>
-            </div>
         </form>
 
     </div>
