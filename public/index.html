@@ -9,30 +9,33 @@
 
 <body class="bg-blue-400">
 
-<div class="relative min-h-screen flex">
-
-    <div class="bg-yellow-400 text-black w-64 space-x-2 px-2">
-
-        <div class="p-4">
-      <a href="http://localhost:3000/home"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"><path d="M8.5 2c.827 0 1.5.673 1.5 1.5v7.525c0 1.569.514 2.287 1.411 3.05 1.01.858 1.589 2.106 1.589 3.425 0 2.481-2.019 4.5-4.5 4.5s-4.5-2.019-4.5-4.5c0-1.319.579-2.567 1.59-3.425.896-.761 1.41-1.48 1.41-3.05v-7.525c0-.827.673-1.5 1.5-1.5zm0-2c-1.933 0-3.5 1.567-3.5 3.5v7.525c0 .587-.258 1.145-.705 1.525-1.403 1.192-2.295 2.965-2.295 4.95 0 3.59 2.909 6.5 6.5 6.5s6.5-2.91 6.5-6.5c0-1.985-.892-3.758-2.295-4.95-.447-.38-.705-.938-.705-1.525v-7.525c0-1.933-1.567-3.5-3.5-3.5zm2.107 14.718c-1.012-.89-1.607-1.734-1.607-3.22v-6.498h-1v6.498c0 1.484-.597 2.332-1.607 3.22-.794.698-1.393 1.642-1.393 2.782 0 1.933 1.567 3.5 3.5 3.5s3.5-1.567 3.5-3.5c0-1.14-.599-2.083-1.393-2.782zm11.393-8.718h-3v-3h-2v3h-3v2h3v3h2v-3h3v-2z"/></svg></a>
+<div class="relative min-h-screen flex">  
+  
+<div class="bg-yellow-400 text-black w-64 space-x-2 px-2">
+    <form action="/logout?_method=DELETE" method="POST">
+  
+  <div class="p-4">
+      <a href="/home"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"><path d="M8.5 2c.827 0 1.5.673 1.5 1.5v7.525c0 1.569.514 2.287 1.411 3.05 1.01.858 1.589 2.106 1.589 3.425 0 2.481-2.019 4.5-4.5 4.5s-4.5-2.019-4.5-4.5c0-1.319.579-2.567 1.59-3.425.896-.761 1.41-1.48 1.41-3.05v-7.525c0-.827.673-1.5 1.5-1.5zm0-2c-1.933 0-3.5 1.567-3.5 3.5v7.525c0 .587-.258 1.145-.705 1.525-1.403 1.192-2.295 2.965-2.295 4.95 0 3.59 2.909 6.5 6.5 6.5s6.5-2.91 6.5-6.5c0-1.985-.892-3.758-2.295-4.95-.447-.38-.705-.938-.705-1.525v-7.525c0-1.933-1.567-3.5-3.5-3.5zm2.107 14.718c-1.012-.89-1.607-1.734-1.607-3.22v-6.498h-1v6.498c0 1.484-.597 2.332-1.607 3.22-.794.698-1.393 1.642-1.393 2.782 0 1.933 1.567 3.5 3.5 3.5s3.5-1.567 3.5-3.5c0-1.14-.599-2.083-1.393-2.782zm11.393-8.718h-3v-3h-2v3h-3v2h3v3h2v-3h3v-2z"/></svg></a>
   </div>
   
   <nav class="py-8"> 
-    <a href="http://localhost:3000/logs" class="block py-2.5 px-4 transition duration-200 hover:bg-blue-400 hover:text-white rounded font-bold">Logs</a>
-    <a href="http://localhost:3000/settings" class="block py-2.5 px-4 transition duration-200 hover:bg-blue-400 rounded hover:text-white font-bold">Settings</a>
-    <a href="http://localhost:3000/about" class="block py-2.5 px-4 transition duration-200 hover:bg-blue-400 rounded hover:text-white font-bold">About</a>
+    <a href="/logs" class="block py-2.5 px-4 transition duration-200 hover:bg-blue-400 hover:text-white rounded font-bold">Logs</a>
+    <a href="/settings" class="block py-2.5 px-4 transition duration-200 hover:bg-blue-400 rounded hover:text-white font-bold">Settings</a>
+    <a href="/about" class="block py-2.5 px-4 transition duration-200 hover:bg-blue-400 rounded hover:text-white font-bold">About</a>
     
-    <a href="http://localhost:3000/">
+    <a href="/">
+        <button type="submit">
       <div class="flex flex-wrap content-evenly py-2.5 px-4 transition duration-200 hover:bg-blue-400 rounded hover:text-white font-bold">
         <div><svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg></div>
-        <div>&nbsp;Log out</div>
+        <div>&nbsp; Log out</div>
       </div>
+        </button>
     </a>
 
   </nav>
-  
-</div>
 
+    </form>
+</div>
 </div>
 
 </body>
