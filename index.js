@@ -74,10 +74,6 @@ app.post("/create", checkNotAuthenticated, async (req,res) => {
     }
 })
 
-app.get("/logs", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/logs.html'))
-})
-
 app.get("/settings", (req, res) => {
     res.sendFile(path.join(__dirname, 'public/settings.html'))
 })
