@@ -74,7 +74,7 @@
                                 Set Target Temperature:
                                     <div class="flex justify-center place-content-center"><span id="maxTemp"></span></div>
                                     <div class="flex justify-center p-4">
-                                        <input type="range" min="0" max="24" value="0" class="range range-lg" id="maxTempSlider">
+                                        <input type="range" max="24" value="0" class="range range-lg" id="maxTempSlider">
                                     </div>
                             </div>
                         </div>
@@ -88,10 +88,11 @@
                             <input type="datetime-local" class="flex rounded shadow border" id="TargetTime" name="TargetTime">
                         </div>
                     </div>
-                    <div class="py-2.5">
-                    <button class="shadow bg-yellow-300 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-black font-bold py-2 px-4 rounded" type="submit">
-                        I'm Coming Home!
-                    </button>
+                    <div class="py-4">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" id="notifications" class="form-checkbox">
+                            <span class="ml-2 text-gray-800 text-2x italic font-bold">I'm Coming Home!</span>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -165,10 +166,15 @@
 
     slider1.oninput = function() {
         output1.innerHTML = this.value;
-    }
+    }``
 
     let slider2 = document.getElementById("maxTempSlider");
     let output2 = document.getElementById("maxTemp");
+
+    let outputMax = document.getElementById("minTemp").max;
+    let outputMin = document.getElementById("maxTemp").min;
+
+    outputMin = outputMax;
 
     output2.innerHTML = slider2.value;
 
