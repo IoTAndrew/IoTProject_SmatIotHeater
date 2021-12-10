@@ -1,1 +1,3 @@
 *.css linguist-vendored
+*.pptx linguist-vendored
+*.js linguist-vendored=false
