@@ -1,6 +1,5 @@
 *.pptx linguist-vendored
 *.json linguist-vendored
 *.html linguist-detectable=true
-*.css linguist-detectable=true
 *.js linguist-detectable=true
 src/* linguist-vendored
