@@ -14,7 +14,6 @@ const bodyParser = require('body-parser')
 const db = require('./db/users')
 
 const initializePassport = require('./passport-config')
-const req = require("express");
 initializePassport(
     passport,
     email => users.find(user => user.email === email),
@@ -25,7 +24,7 @@ initializePassport(
 let users = []
 
 //this will hold current user id
-let userid, userEmail
+//let userid
 
 app.use("/public", express.static(path.join(__dirname,'public')))
 app.use(bodyParser.urlencoded({extended: false}))
@@ -46,20 +45,14 @@ app.get("/", checkNotAuthenticated , async (req,res) => {
     res.sendFile(path.join(__dirname,'public/auth.html'))
 })
 
-//app.post("/", checkNotAuthenticated, (req), passport.authenticate('local', {
-  //  successRedirect: '/home',
-  //  failureRedirect: '/',
-  //  failureFlash: true
-//}))
-
-app.post("/", checkNotAuthenticated, passport.authenticate('local', function (req,res) {
-    userEmail = req.user
-    console.log(userEmail)
-    res.redirect('/home')
-    })
-)
+app.post("/", checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/home',
+    failureRedirect: '/',
+    failureFlash: true
+}))
 
 app.get("/home", checkAuthenticated, (req, res) => {
+    //console.log(req.user.id) //current signed in user ID
     res.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
@@ -75,7 +68,7 @@ app.post("/create", checkNotAuthenticated, async (req,res) => {
             name: req.body.name,
             email: req.body.email,
             location: req.body.location,
-            password: hashedPassword,
+            password: hashedPassword
         })
         console.log("Added to DB")
         res.redirect("/")
@@ -98,10 +91,29 @@ app.delete('/logout', (req, res) => {
     res.redirect('/')
 })
 
+app.patch('/users/:id', async (req, res) => {
+    const id = await db.updateUser(req.params.id, req.body)
+    res.status(200).json({id})  //need to specify which parameters to change via json
+    //maybe make multiple patches, one for each button?
+    //form submission might be useful?
+})
+
+//this is where the mcu should hit
+app.get('/api', checkAuthenticated ,async (req, res) => {
+    const id = req.user.id
+    console.log(id)
+    res.redirect('/api/' + id)
+})
+
 //specifically made for giving data to the board
 app.get('/api/:id', async (req, res) => {
     const id = await db.getUser(req.params.id, req.body)
-    res.status(200).json({id})
+    const minTemp = id[0].minTemp
+    const reqTemp = id[0].reqTemp
+    const goingHome = id[0].goingHome
+    const dataString = minTemp + ' ' + reqTemp + ' ' + goingHome
+    console.log(dataString)
+    res.send(dataString)
 })
 
 function checkAuthenticated(req, res, next) {
@@ -117,11 +129,6 @@ function checkNotAuthenticated(req, res, next) {
         return res.redirect('/')
     }
     next()
-}
-
-function getUserEmail(string) {
-    userEmail = string
-    console.log(userEmail)
 }
 
 app.listen(3000);
