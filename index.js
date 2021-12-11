@@ -23,6 +23,9 @@ initializePassport(
 //this will hold stuff pulled from the db
 let users = []
 
+//this will hold current user id
+//let userid
+
 app.use("/public", express.static(path.join(__dirname,'public')))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
@@ -37,7 +40,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
 
-app.get("/",checkNotAuthenticated , async (req,res) => {
+app.get("/", checkNotAuthenticated , async (req,res) => {
     users = await db.getAllUsers()
     res.sendFile(path.join(__dirname,'public/auth.html'))
 })
@@ -48,7 +51,8 @@ app.post("/", checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }))
 
-app.get("/home", (req, res) => {
+app.get("/home", checkAuthenticated, (req, res) => {
+    //console.log(req.user.id) //current signed in user ID
     res.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
@@ -85,6 +89,31 @@ app.get("/about", (req, res) => {
 app.delete('/logout', (req, res) => {
     req.logOut()
     res.redirect('/')
+})
+
+app.patch('/users/:id', async (req, res) => {
+    const id = await db.updateUser(req.params.id, req.body)
+    res.status(200).json({id})  //need to specify which parameters to change via json
+    //maybe make multiple patches, one for each button?
+    //form submission might be usefull
+})
+
+//this is where the mcu should hit
+app.get('/api', checkAuthenticated ,async (req, res) => {
+    const id = req.user.id
+    console.log(id)
+    res.redirect('/api/' + id)
+})
+
+//specifically made for giving data to the board
+app.get('/api/:id', async (req, res) => {
+    const id = await db.getUser(req.params.id, req.body)
+    const minTemp = id[0].minTemp
+    const reqTemp = id[0].reqTemp
+    const goingHome = id[0].goingHome
+    const dataString = minTemp + ' ' + reqTemp + ' ' + goingHome
+    console.log(dataString)
+    res.send(dataString)
 })
 
 function checkAuthenticated(req, res, next) {
