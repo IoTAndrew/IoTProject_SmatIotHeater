@@ -59,21 +59,13 @@ app.get("/home", checkAuthenticated, (req, res) => {
 app.patch('/home', async (req, res) => {
     try {
         console.log(req.user.id)
-        await db.updateUser(req.user.id, {
-            minTemp: req.body.minTempSlider,
-            reqTemp: req.body.maxTempSlider,
-            arrivalTime: req.body.TargetTime,
-            goingHome: req.body.goingHome,
-        })
+        const id = await db.updateUser(req.user.id, req.body)
         console.log('user info updated')
-        res.redirect('back')
     } catch {
         console.log('user info not updated')
         res.redirect('back')
     }
 })
-
-
 
 app.get("/create", (req, res) => {
     res.sendFile(path.join(__dirname, 'public/user.html'))

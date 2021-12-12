@@ -16,8 +16,8 @@ function deleteUser(id){
     return knex('userCredentials').where('id', id).del()
 }
 
-function updateUser(id, user){
-    return knex('userCredentials').where('id', id).update(user)
+function updateUser(id, userData){
+    return knex('userCredentials').where('id', id).update(userData)
 }
 
 module.exports = {

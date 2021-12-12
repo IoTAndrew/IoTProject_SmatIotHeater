@@ -3,6 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel='stylesheet' href='/public/styles.css'>
     <title>JARS</title>
@@ -50,7 +51,6 @@
             </div>
         </div>
 
-        <form id="mainControls">
             <div class="flex mt-16 space-x-16">
                 <div>
                     <label class="flex-row items-center">
@@ -87,7 +87,7 @@
                         </div>
                         <div class="px-8 py-3">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" id="notifications" class="form-checkbox">
+                                <input type="checkbox" id="notifications" class="form-checkbox" value="0">
                                 <span class="ml-2 text-gray-800 text-2x italic font-bold">I'm Coming Home!</span>
                             </label>
                         </div>
@@ -95,15 +95,10 @@
                 </div>
             </div>
             <div class="py-2">
-                <button class="shadow bg-yellow-300 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-black font-bold py-2 px-4 rounded" type="submit">
+                <button class="shadow bg-yellow-300 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-black font-bold py-2 px-4 rounded" id="submitInfo">
                     Submit Changes
                 </button>
             </div>
-
-        </form>
-
-
-
     </div>
 </div>
 
@@ -176,5 +171,37 @@
     slider2.oninput = function() {
         output2.innerHTML = this.value;
     }
+
+    $(document).ready(function () {
+        let goingHome
+
+        $('#submitInfo').on('click', function () {
+            if($('#notifications').is(':checked')) {
+                goingHome = true
+            } else {
+                goingHome = false
+            }
+
+            let updInfo = {
+                minTemp: slider1.value,
+                reqTemp: slider2.value,
+                arrivalTime: document.getElementById('TargetTime').value,
+                goingHome: goingHome,
+            }
+            console.log(updInfo)
+
+            $.ajax({
+                type: 'PATCH',
+                url: '/home',
+                data: JSON.stringify(updInfo),
+                processData: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    alert(result.success)
+                }
+            })
+        })
+    })
 </script>
+
 </html>
