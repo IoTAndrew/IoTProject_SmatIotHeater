@@ -101,9 +101,10 @@ app.get("/settings", (req, res) => {
     res.sendFile(path.join(__dirname, 'public/settings.html'))
 })
 
+/*
 app.get("/about", (req, res) => {
     res.sendFile(path.join(__dirname, 'public/about.html'))
-})
+})*/
 
 app.delete('/logout', (req, res) => {
     req.logOut()
