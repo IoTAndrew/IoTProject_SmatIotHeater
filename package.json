@@ -11,6 +11,7 @@
     "express": "^4.17.1",
     "express-flash": "^0.0.2",
     "express-session": "^1.17.2",
+    "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.14",
     "method-override": "^3.0.0",

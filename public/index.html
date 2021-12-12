@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <form class="space-y-2">
+        <form class="space-y-2" method="POST">
             <div class="flex mt-32 space-x-8">
                 <div>
                     <label class="flex-row items-center">
@@ -89,12 +89,26 @@
                         </div>
                     </div>
                     <div class="py-2.5">
-                    <button class="shadow bg-yellow-300 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-black font-bold py-2 px-4 rounded" type="submit">
+                    <button class="shadow bg-yellow-300 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-black font-bold py-2 px-4 rounded" id="goingHome" value="false" onclick="change()" type="submit">
                         I'm Coming Home!
                     </button>
                     </div>
                 </div>
             </div>
+            <script>
+                $.ajax({
+                    url: '/home',
+                    type: 'PATCH',
+                    data: {
+                        minTemp: document.getElementById("minTempSlider"),
+                        reqTemp: document.getElementById("maxTempSlider"),
+                        arrivalTime: document.getElementById("TargetTime"),
+                        goingHome: document.getElementById("goingHome"),
+                    },
+                    success: function () {
+                    }
+                })
+            </script>
         </form>
 
         <div class="py-2">
@@ -174,6 +188,15 @@
 
     slider2.oninput = function() {
         output2.innerHTML = this.value;
+    }
+</script>
+
+<script>
+    function change() {
+        let change = document.getElementById("goingHome")
+        if (change.value == "false") {
+            change.value = "true"
+        }
     }
 </script>
 </html>
