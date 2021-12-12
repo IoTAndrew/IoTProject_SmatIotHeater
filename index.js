@@ -65,6 +65,9 @@ app.patch('/home', async (req, res) => {
         console.log('user info not updated')
         res.redirect('back')
     }
+    //if u want to display the same user picks every time a user logs in then
+    //gonna have to use jquery ajax again
+    //rough but doable. do we need it tho? :\
 })
 
 app.get("/create", (req, res) => {
