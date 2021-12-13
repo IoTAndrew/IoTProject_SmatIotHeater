@@ -6,6 +6,180 @@
 Document
 ========
 */
+/**
+Popup instruction for temp data
+*/
+/*symbol*/
+.quesData{
+position: relative;
+display: inline-block;
+left: -20px;
+top: -118px;
+}
+/*text box with the instrcutions*/
+.quesData .text{
+visibility: hidden;
+width: 120px;
+background-color: #AED6F1;
+color: white;
+text-align:center;
+border-radius: 6px;
+padding: 5px 0;
+position: absolute;
+z-index: 1;
+bottom: 115%;
+left: 65%;
+margin-left: -60px;
+}
+/*shows message when hovered*/
+.quesData:hover .text{
+visibility: visible;
+pointer-events: auto;
+}
+/*arrow pointer leading the symbol*/
+.quesData .text::after{
+position:absolute;
+content:"";
+top:100%;
+border-color: #AED6F1 transparent transparent transparent;
+left:50%;
+margin-left:-8px;
+border-width:5px;
+border-style:solid;
+}
+/*end of popup styling for temp data*/
+
+/**
+Popup instruction for min temp
+*/
+/*symbol*/
+.quesMin{
+position: relative;
+display: inline-block;
+left: 310px;
+top: 10px;
+}
+/*text box with the instrcutions*/
+.quesMin .text{
+visibility: hidden;
+width: 120px;
+background-color: #AED6F1;
+color: white;
+text-align:center;
+border-radius: 6px;
+padding: 5px 0;
+position: absolute;
+z-index: 1;
+bottom: 115%;
+left: 65%;
+margin-left: -60px;
+}
+/*shows message when hovered*/
+.quesMin:hover .text{
+visibility: visible;
+pointer-events: auto;
+}
+/*arrow pointer leading the symbol*/
+.quesMin .text::after{
+position:absolute;
+content:"";
+top:100%;
+border-color: #AED6F1 transparent transparent transparent;
+left:50%;
+margin-left:-8px;
+border-width:5px;
+border-style:solid;
+}
+/*end of popup styling for min temp*/
+
+
+/**
+Popup instruction for target temp
+*/
+/*symbol*/
+.quesTarget{
+position: relative;
+display: inline-block;
+left: 290px;
+top: 10px;
+}
+/*text box with the instrcutions*/
+.quesTarget .text{
+visibility: hidden;
+width: 120px;
+background-color: #AED6F1;
+color: white;
+text-align:center;
+border-radius: 6px;
+padding: 5px 0;
+position: absolute;
+z-index: 1;
+bottom: 115%;
+left: 65%;
+margin-left: -60px;
+}
+/*shows message when hovered*/
+.quesTarget:hover .text{
+visibility: visible;
+pointer-events: auto;
+}
+/*arrow pointer leading the symbol*/
+.quesTarget .text::after{
+position:absolute;
+content:"";
+top:100%;
+border-color: #AED6F1 transparent transparent transparent;
+left:50%;
+margin-left:-8px;
+border-width:5px;
+border-style:solid;
+}
+/*end of popup styling for target temp*/
+
+
+/**
+Popup instruction for date and time
+*/
+/*symbol*/
+.quesdt{
+position: relative;
+display: inline-block;
+left: 310px;
+top: 10px;
+}
+/*text box with the instrcutions*/
+.quesdt .text{
+visibility: hidden;
+width: 120px;
+background-color: #AED6F1;
+color: white;
+text-align:center;
+border-radius: 6px;
+padding: 5px 0;
+position: absolute;
+z-index: 1;
+bottom: 115%;
+left: 65%;
+margin-left: -60px;
+}
+/*shows message when hovered*/
+.quesdt:hover .text{
+visibility: visible;
+pointer-events: auto;
+}
+/*arrow pointer leading the symbol*/
+.quesdt .text::after{
+position:absolute;
+content:"";
+top:100%;
+border-color: #AED6F1 transparent transparent transparent;
+left:50%;
+margin-left:-8px;
+border-width:5px;
+border-style:solid;
+}
+/*end of popup styling for date and time*/
+
 
 /**
 Use a better box model (opinionated).
