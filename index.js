@@ -106,8 +106,8 @@ app.delete('/logout', (req, res) => {
     res.redirect('/')
 })
 
-//this is where the mcu should hit
-app.get('/api', checkAuthenticated ,async (req, res) => {
+//this is where the mcu should hit, YES IT WORKS IN MY BROWSER
+app.get('/api', checkAuthenticated, async (req, res) => {
     const id = req.user.id
     console.log(id)
     res.redirect('/api/' + id)
@@ -122,6 +122,10 @@ app.get('/api/:id', async (req, res) => {
     const dataString = minTemp + ' ' + reqTemp + ' ' + goingHome
     console.log(dataString)
     res.send(dataString)
+})
+
+app.post('api', async (req,res) => {
+    await db.addData() //probably will use url parameters, gonna need to read them and append them to the table
 })
 
 function checkAuthenticated(req, res, next) {
