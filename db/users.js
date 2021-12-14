@@ -8,6 +8,10 @@ function getUser(id){
     return knex('userCredentials').where('id', id).select()
 }
 
+function getMCU(id){
+    return knex('').where('id', id).select()
+}
+
 function getAllUsers(){
     return knex('userCredentials').select('*')
 }
@@ -27,6 +31,7 @@ function addData(data){
 module.exports = {
     createUser,
     getUser,
+    getMCU,
     getAllUsers,
     deleteUser,
     updateUser,

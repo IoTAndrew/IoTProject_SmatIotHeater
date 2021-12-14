@@ -107,15 +107,9 @@ app.delete('/logout', (req, res) => {
 })
 
 //this is where the mcu should hit, YES IT WORKS IN MY BROWSER
-app.get('/api', checkAuthenticated, async (req, res) => {
-    const id = req.user.id
-    console.log(id)
-    res.redirect('/api/' + id)
-})
-
-//specifically made for giving data to the board
-app.get('/api/:id', async (req, res) => {
-    const id = await db.getUser(req.params.id, req.body)
+app.get('/api?:', checkAuthenticated, async (req, res) => {
+    const idMCU = await db.getMCU(req.query.id) //get mcu id
+    const id = await db.getUser(idMCU[0].id) //get user id
     const minTemp = id[0].minTemp
     const reqTemp = id[0].reqTemp
     const goingHome = id[0].goingHome
