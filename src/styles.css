@@ -6,7 +6,6 @@ input:checked ~ .dot {
     transform: translateX(100%);
     background-color: #48bb78;
 }
-
 /**
 Popup instruction for temp data
 */
@@ -14,15 +13,13 @@ Popup instruction for temp data
 .quesData{
     position: relative;
     display: inline-block;
-    left: -20px;
-    top: -118px;
+
 }
 /*text box with the instrcutions*/
 .quesData .text{
     visibility: hidden;
-    width: 120px;
+    width: 165px;
     background-color: #AED6F1;
-    color: white;
     text-align:center;
     border-radius: 6px;
     padding: 5px 0;
@@ -44,7 +41,7 @@ Popup instruction for temp data
     top:100%;
     border-color: #AED6F1 transparent transparent transparent;
     left:50%;
-    margin-left:-8px;
+    margin-left:-30px;
     border-width:5px;
     border-style:solid;
 }
@@ -57,15 +54,12 @@ Popup instruction for min temp
 .quesMin{
     position: relative;
     display: inline-block;
-    left: 310px;
-    top: 10px;
 }
 /*text box with the instrcutions*/
 .quesMin .text{
     visibility: hidden;
-    width: 120px;
+    width: 140px;
     background-color: #AED6F1;
-    color: white;
     text-align:center;
     border-radius: 6px;
     padding: 5px 0;
@@ -87,7 +81,7 @@ Popup instruction for min temp
     top:100%;
     border-color: #AED6F1 transparent transparent transparent;
     left:50%;
-    margin-left:-8px;
+    margin-left:-18px;
     border-width:5px;
     border-style:solid;
 }
@@ -101,18 +95,15 @@ Popup instruction for target temp
 .quesTarget{
     position: relative;
     display: inline-block;
-    left: 290px;
-    top: 10px;
 }
 /*text box with the instrcutions*/
 .quesTarget .text{
     visibility: hidden;
-    width: 120px;
+    width: 180px;
     background-color: #AED6F1;
-    color: white;
     text-align:center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 6px 0;
     position: absolute;
     z-index: 1;
     bottom: 115%;
@@ -131,7 +122,7 @@ Popup instruction for target temp
     top:100%;
     border-color: #AED6F1 transparent transparent transparent;
     left:50%;
-    margin-left:-8px;
+    margin-left:-38px;
     border-width:5px;
     border-style:solid;
 }
@@ -145,15 +136,13 @@ Popup instruction for date and time
 .quesdt{
     position: relative;
     display: inline-block;
-    left: 310px;
-    top: 10px;
+
 }
 /*text box with the instrcutions*/
 .quesdt .text{
     visibility: hidden;
     width: 120px;
     background-color: #AED6F1;
-    color: white;
     text-align:center;
     border-radius: 6px;
     padding: 5px 0;
