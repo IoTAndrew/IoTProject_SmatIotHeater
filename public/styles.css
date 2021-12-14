@@ -32246,7 +32246,7 @@ video {
 
 input:checked ~ .dot {
   transform: translateX(100%);
-  background-color: #48bb78;
+  background-color: dodgerblue;
 }
 
 /**
@@ -188579,3 +188579,4 @@ Popup instruction for date and time
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
+
