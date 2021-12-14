@@ -4,7 +4,7 @@
 
 input:checked ~ .dot {
     transform: translateX(100%);
-    background-color: #48bb78;
+    background-color: dodgerblue;
 }
 /**
 Popup instruction for temp data
@@ -169,3 +169,4 @@ Popup instruction for date and time
     border-style:solid;
 }
 /*end of popup styling for date and time*/
+
