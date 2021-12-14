@@ -99,11 +99,11 @@ Popup instruction for target temp
 /*text box with the instrcutions*/
 .quesTarget .text{
     visibility: hidden;
-    width: 180px;
+    width: 245px;
     background-color: #AED6F1;
     text-align:center;
     border-radius: 6px;
-    padding: 6px 0;
+    padding: 5px 0;
     position: absolute;
     z-index: 1;
     bottom: 115%;
@@ -122,7 +122,7 @@ Popup instruction for target temp
     top:100%;
     border-color: #AED6F1 transparent transparent transparent;
     left:50%;
-    margin-left:-38px;
+    margin-left:-70px;
     border-width:5px;
     border-style:solid;
 }
@@ -141,11 +141,11 @@ Popup instruction for date and time
 /*text box with the instrcutions*/
 .quesdt .text{
     visibility: hidden;
-    width: 120px;
+    width: 240px;
     background-color: #AED6F1;
     text-align:center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 8px 0;
     position: absolute;
     z-index: 1;
     bottom: 115%;
@@ -164,7 +164,7 @@ Popup instruction for date and time
     top:100%;
     border-color: #AED6F1 transparent transparent transparent;
     left:50%;
-    margin-left:-8px;
+    margin-left:-68px;
     border-width:5px;
     border-style:solid;
 }
