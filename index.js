@@ -138,4 +138,19 @@ function checkNotAuthenticated(req, res, next) {
     next()
 }
 
+function tempGetter (){
+// call the data from the Database
+    var cityName; // need the call here
+    const api="https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid=ecd9898e21ff116af537053f34e4b6b7&units=metric";
+    fetch(api)
+        .then(response => {return response.json();
+        })
+        .then(data => {console.log(data);
+            //to call weather go data(where the api link is stored) main(where the temp is saved into(submenu)) and temp for temp.
+            // look at console.log(data) to see where to find the info you need from.
+            return data.main.temp});
+    //this returns only temp.
+
+}
+
 app.listen(3000);
