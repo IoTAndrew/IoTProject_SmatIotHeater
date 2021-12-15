@@ -84,6 +84,10 @@ app.post("/create", checkNotAuthenticated, async (req,res) => {
             location: req.body.location,
             password: hashedPassword
         })
+        await db.addData({// doesnt work rn
+            id: id.at(-1) + 1,
+            user_id: Date.now().toString(),
+        })
         console.log("Added to DB")
         res.redirect("/")
     } catch {
@@ -107,20 +111,19 @@ app.delete('/logout', (req, res) => {
 })
 
 //this is where the mcu should hit, YES IT WORKS IN MY BROWSER
-app.get('/api?:', checkAuthenticated, async (req, res) => {
-    const idMCU = await db.getMCU(req.query.dev_id) //get mcu id
-    //
-    const id = await db.getUser(idMCU[0].id) //get user id
+app.get('/api', async (req, res) => {
+    const user = await db.getMCU(req.query.dev_id) //get mcu id
+    const id = await db.getUser(user[0].user_id) //get user id
+
+    //const location = id[0].location
+    //tempGetter(location)
+
     const minTemp = id[0].minTemp
     const reqTemp = id[0].reqTemp
     const goingHome = id[0].goingHome
     const dataString = minTemp + ' ' + reqTemp + ' ' + goingHome
     console.log(dataString)
     res.send(dataString)
-})
-
-app.post('api', async (req,res) => {
-    await db.addData() //probably will use url parameters, gonna need to read them and append them to the table
 })
 
 function checkAuthenticated(req, res, next) {
@@ -138,9 +141,9 @@ function checkNotAuthenticated(req, res, next) {
     next()
 }
 
-function tempGetter (){
+function tempGetter (string){
 // call the data from the Database
-    var cityName; // need the call here
+    let cityName = string; // need the call here
     const api="https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid=ecd9898e21ff116af537053f34e4b6b7&units=metric";
     fetch(api)
         .then(response => {return response.json();
