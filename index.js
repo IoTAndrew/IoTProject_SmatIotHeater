@@ -11,7 +11,7 @@ const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
-const db = require('./db/users')
+const knex = require('./db/knex')
 
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -41,7 +41,7 @@ app.use(passport.session())
 app.use(methodOverride('_method'))
 
 app.get("/", checkNotAuthenticated , async (req,res) => {
-    users = await db.getAllUsers()
+    users = await getAllUsers()
     res.sendFile(path.join(__dirname,'public/auth.html'))
 })
 
@@ -59,7 +59,7 @@ app.get("/home", checkAuthenticated, (req, res) => {
 app.patch('/home', async (req, res) => {
     try {
         console.log(req.user.id)
-        const id = await db.updateUser(req.user.id, req.body)
+        const id = await updateUser(req.user.id, req.body)
         console.log('user info updated')
     } catch {
         console.log('user info not updated')
@@ -77,16 +77,12 @@ app.get("/create", (req, res) => {
 app.post("/create", checkNotAuthenticated, async (req,res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        await db.createUser({
+        await createUser({
             id: Date.now().toString(),
             name: req.body.name,
             email: req.body.email,
             location: req.body.location,
             password: hashedPassword
-        })
-        await db.addData({// doesnt work rn
-            id: id.at(-1) + 1,
-            user_id: Date.now().toString(),
         })
         console.log("Added to DB")
         res.redirect("/")
@@ -111,9 +107,49 @@ app.delete('/logout', (req, res) => {
 })
 
 //this is where the mcu should hit, YES IT WORKS IN MY BROWSER
+//ADD SQL SCRIPT TO THE JS FILE
 app.get('/api', async (req, res) => {
-    const user = await db.getMCU(req.query.dev_id) //get mcu id
-    const id = await db.getUser(user[0].user_id) //get user id
+    const devID = req.query.dev_id
+    const temp = req.query.inside_temp
+    const hum = req.query.hum
+
+    const userr = await getMCU(devID) //get mcu id
+
+    const dbTempOBJ = await knex.raw("SELECT inside_temp from Temps where dev_id = " + req.query.dev_id + " ORDER BY end_time DESC LIMIT 1")
+    const dbTemp = dbTempOBJ[0].inside_temp
+
+    if(temp >= dbTemp + 1 || temp <= dbTemp - 1){
+        await knex.raw("INSERT INTO Temps values (" + devID + ", " + temp + ", " + hum + ", DATETIME('NOW'), DATETIME('NOW'));")
+    } else {
+        await knex.raw("UPDATE Temps set end_time = DATETIME('NOW') where end_time = " +
+        "(SELECT end_time from Temps ORDER BY end_time DESC LIMIT 1)"
+        + "" +
+            ";")
+    }
+
+    const goingHomeObj = await knex.raw("SELECT goingHome from userCredentials where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
+    const going_home = goingHomeObj[0].goingHome
+    if(going_home){
+        await knex.raw("UPDATE Devs set heat_time = DATETIME('NOW') where id = " + req.query.dev_id + ";")
+    }else{
+        const reqTempOBJ = await knex.raw("SELECT reqTemp from userCredentials where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
+        const reqTemp = reqTempOBJ[0].reqTemp
+        const arrivalTimeOBJ = await knex.raw("SELECT arrivalTime from userCredentials where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
+        const arrivalTime = arrivalTimeOBJ[0].arrivalTime
+        await knex.raw("UPDATE Devs set heat_time = datetime(\n" +
+            "            julianday(\"" + arrivalTime + "\")\n" +
+            "            -\n" +
+            "            (\n" +
+            "                    julianday((SELECT start_time FROM Temps where dev_id = " + devID + " AND inside_temp = " + reqTemp + " limit 1))\n" +
+            "                    -\n" +
+            "                    julianday((SELECT end_time FROM Temps where dev_id = " + devID + " AND inside_temp = " + temp + " AND end_time < (\n" +
+            "                        SELECT start_time FROM Temps where dev_id = " + devID + " AND inside_temp = " + reqTemp + " limit 1\n" +
+            "                        ) limit 1))\n" +
+            "                )\n" +
+            "    ) where id = " + devID + ";")
+    }
+
+    const id = await getUser(userr[0].user_id) //get user id
 
     //const location = id[0].location
     //tempGetter(location)
@@ -121,8 +157,7 @@ app.get('/api', async (req, res) => {
     const minTemp = id[0].minTemp
     const reqTemp = id[0].reqTemp
     const goingHome = id[0].goingHome
-    const dataString = minTemp + ' ' + reqTemp + ' ' + goingHome
-    console.log(dataString)
+    const dataString = minTemp + '/' + reqTemp + '/' + goingHome + '/'
     res.send(dataString)
 })
 
@@ -155,5 +190,42 @@ function tempGetter (string){
     //this returns only temp.
 
 }
+
+function createUser(user){
+    return knex('userCredentials').insert(user)
+}
+
+function getUser(id){
+    return knex('userCredentials').where('id', id).select()
+}
+
+function getMCU(id){
+    return knex('Devs').where('id', id).select()
+}
+
+function getAllUsers(){
+    return knex('userCredentials').select('*')
+}
+
+function deleteUser(id){
+    return knex('userCredentials').where('id', id).del()
+}
+
+function updateUser(id, userData){
+    return knex('userCredentials').where('id', id).update(userData)
+}
+
+function addData(data){
+    return knex('Devs').insert(data)
+}
+
+function addDataTemps(data){
+    return knex('Temps').insert(data)
+}
+
+function getTemp(id) {
+    return knex('Temps').where('id', id).select()
+}
+
 
 app.listen(3000);
