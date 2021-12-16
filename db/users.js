@@ -9,7 +9,7 @@ function getUser(id){
 }
 
 function getMCU(id){
-    return knex('').where('id', id).select()
+    return knex('Devs').where('id', id).select()
 }
 
 function getAllUsers(){
@@ -25,7 +25,7 @@ function updateUser(id, userData){
 }
 
 function addData(data){
-    return knex('new').insert(data)
+    return knex('Devs').insert(data)
 }
 
 module.exports = {
