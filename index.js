@@ -103,7 +103,7 @@ app.get("/about", (req, res) => {
 
 app.delete('/logout', (req, res) => {
     req.logOut()
-    res.redirect('/')
+    res.redirect('/')//SAVETHIS
 })
 
 //this is where the mcu should hit, YES IT WORKS IN MY BROWSER
