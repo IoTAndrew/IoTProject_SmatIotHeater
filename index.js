@@ -59,7 +59,7 @@ app.get("/home", checkAuthenticated, (req, res) => {
 app.patch('/home', async (req, res) => {
     try {
         console.log(req.user.id)
-        const id = await updateUser(req.user.id, req.body)
+        await updateUser(req.user.id, req.body)
         console.log('user info updated')
     } catch {
         console.log('user info not updated')
@@ -92,14 +92,30 @@ app.post("/create", checkNotAuthenticated, async (req,res) => {
     }
 })
 
-app.get("/settings", (req, res) => {
+app.get('/settings', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/settings.html'))
 })
 
-/*
-app.get("/about", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/about.html'))
-})*/
+app.patch('/settings', async (req, res) => {
+    try {
+        console.log(req.user.id)
+        if (req.body.password){
+            await updateUser(req.user.id, req.body) //if password is blank it is not sent
+            await updateUser(req.user.id, {
+                password: await bcrypt.hash(req.body.password, 10),
+            })
+        } else {
+            await updateUser(req.user.id, req.body)
+        }
+        console.log('user info updated')
+    } catch {
+        console.log('user info not updated')
+        res.redirect('back')
+    }
+    //if u want to display the same user picks every time a user logs in then
+    //gonna have to use jquery ajax again
+    //rough but doable. do we need it tho? :\
+})
 
 app.delete('/logout', (req, res) => {
     req.logOut()
@@ -150,9 +166,6 @@ app.get('/api', async (req, res) => {
     }
 
     const id = await getUser(userr[0].user_id) //get user id
-
-    //const location = id[0].location
-    //tempGetter(location)
 
     const minTemp = id[0].minTemp
     const reqTemp = id[0].reqTemp
