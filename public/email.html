@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script type="text/javascript">
+  function send(){
+    Email.send({
+      Host:"smtp.gmail.com",
+      Username:"jarstempweb@gmail.com",
+      Password:"jars1234",
+      To: 'jananin@metropolia.fi',
+      From: "jarstempweb@gmail.com",
+      Subject: "Alert!",
+      Body: "Check device!",
+    }).then(function(){
+      alert("Sent!")
+    });
+  }
+</script>
+
+</head>
+</html>
+
