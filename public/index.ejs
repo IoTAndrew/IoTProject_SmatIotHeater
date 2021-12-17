@@ -250,8 +250,18 @@
         output2.innerHTML = this.value;
     }
 
+
     $(document).ready(function () {
         let goingHome
+        let myVar = 'test'
+
+        $.ajax({
+            url: '/home',
+            type: 'POST',
+            data: {'myData': myVar}
+        }).done(function (data){
+            console.log(data)
+        })
 
         $('#submitInfo').on('click', function () {
             if ($('#notifications').is(':checked')) {
@@ -342,7 +352,6 @@
         });
         myChart.update();
     }
-
 
 
 </script>

@@ -23,6 +23,12 @@ initializePassport(
 //this will hold stuff pulled from the db
 let users = []
 
+//let stat = []
+
+let devID;
+let hum;
+let temp;
+
 //this will hold current user id
 //let userid
 
@@ -40,6 +46,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
 
+app.set('view engine', 'ejs');
+
 app.get("/", checkNotAuthenticated , async (req,res) => {
     users = await getAllUsers()
     res.sendFile(path.join(__dirname,'public/auth.html'))
@@ -51,10 +59,12 @@ app.post("/", checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }))
 
+
 app.get("/home", checkAuthenticated, (req, res) => {
     //console.log(req.user.id) //current signed in user ID
-    res.sendFile(path.join(__dirname, 'public/index.html'))
+    res.render("index", {temperature: temp, humidity: hum, loc: req.user.location})
 })
+
 
 app.patch('/home', async (req, res) => {
     try {
@@ -125,33 +135,38 @@ app.delete('/logout', (req, res) => {
 //this is where the mcu should hit, YES IT WORKS IN MY BROWSER
 //ADD SQL SCRIPT TO THE JS FILE
 app.get('/api', async (req, res) => {
-    const devID = req.query.dev_id
-    const temp = req.query.inside_temp
-    const hum = req.query.hum
+    devID = req.query.dev_id
+    temp = req.query.inside_temp
+    hum = req.query.hum
+
 
     const userr = await getMCU(devID) //get mcu id
 
     const dbTempOBJ = await knex.raw("SELECT inside_temp from Temps where dev_id = " + req.query.dev_id + " ORDER BY end_time DESC LIMIT 1")
     const dbTemp = dbTempOBJ[0].inside_temp
 
-    if(temp >= dbTemp + 1 || temp <= dbTemp - 1){
-        await knex.raw("INSERT INTO Temps values (" + devID + ", " + temp + ", " + hum + ", DATETIME('NOW'), DATETIME('NOW'));")
-    } else {
+    if(temp >= dbTemp - 1 && temp <= dbTemp + 1){
         await knex.raw("UPDATE Temps set end_time = DATETIME('NOW') where end_time = " +
-        "(SELECT end_time from Temps ORDER BY end_time DESC LIMIT 1)"
-        + "" +
+            "(SELECT end_time from Temps ORDER BY end_time DESC LIMIT 1)"
+            + "" +
             ";")
+    } else {
+        await knex.raw("INSERT INTO Temps values (" + devID + ", " + temp + ", " + hum + ", DATETIME('NOW'), DATETIME('NOW'));")
     }
 
-    const goingHomeObj = await knex.raw("SELECT goingHome from userCredentials where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
-    const going_home = goingHomeObj[0].goingHome
+    let goingHomeObj = await knex.raw("SELECT goingHome, arrivalTime, reqTemp from userCredentials where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
+    let going_home = goingHomeObj[0].goingHome
+    const arrivalTime = goingHomeObj[0].arrivalTime
+    const reqTemp = goingHomeObj[0].reqTemp
+
+    console.log("here")
+    console.log(going_home)
+    console.log(arrivalTime)
     if(going_home){
-        await knex.raw("UPDATE Devs set heat_time = DATETIME('NOW') where id = " + req.query.dev_id + ";")
-    }else{
-        const reqTempOBJ = await knex.raw("SELECT reqTemp from userCredentials where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
-        const reqTemp = reqTempOBJ[0].reqTemp
-        const arrivalTimeOBJ = await knex.raw("SELECT arrivalTime from userCredentials where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
-        const arrivalTime = arrivalTimeOBJ[0].arrivalTime
+        console.log("UPDATE")
+        //await knex.raw("UPDATE Devs set heat_time = DATETIME('NOW') where id = " + req.query.dev_id + ";")
+    }else if (arrivalTime){
+        console.log("update 2")
         await knex.raw("UPDATE Devs set heat_time = datetime(\n" +
             "            julianday(\"" + arrivalTime + "\")\n" +
             "            -\n" +
@@ -163,16 +178,37 @@ app.get('/api', async (req, res) => {
             "                        ) limit 1))\n" +
             "                )\n" +
             "    ) where id = " + devID + ";")
+        await knex.raw("UPDATE userCredentials set arrivalTime = \"\" where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
     }
+
+    const heatTimeObj = await knex.raw("SELECT heat_time from Devs where id = " + req.query.dev_id + ";")
+    const heatTime = heatTimeObj[0].goingHome
+    if(heatTime)
+        await knex.raw("UPDATE userCredentials set goingHome = (case when (select heat_time from Devs where id = 1) < DATETIME(\"now\") then 1 else 0 end) where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
+
+    goingHomeObj = await knex.raw("SELECT goingHome from userCredentials where id = (SELECT user_id from Devs where id = " + req.query.dev_id + ");")
+    going_home = goingHomeObj[0].goingHome
+    if(going_home){
+        await knex.raw("UPDATE Devs set heat_time = \"\" where id =  " + req.query.dev_id + ";")
+    }
+
 
     const id = await getUser(userr[0].user_id) //get user id
 
     const minTemp = id[0].minTemp
-    const reqTemp = id[0].reqTemp
     const goingHome = id[0].goingHome
     const dataString = minTemp + '/' + reqTemp + '/' + goingHome + '/'
     res.send(dataString)
 })
+
+function sendInsideStat(temp, hum)
+{
+    stat = {
+        "temperature": temp,
+        "humidity": hum
+    }
+
+}
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
