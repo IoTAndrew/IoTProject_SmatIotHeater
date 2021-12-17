@@ -41,7 +41,7 @@
             <div class="mt-4">
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="NewEmail">
+                        <label class="block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2" for="NewEmail">
                             New Email
                         </label>
                         <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-400" name="NewEmail" id="NewEmail" type="text">
@@ -49,16 +49,18 @@
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="NewPassword">
+                        <label class="block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2" for="NewPassword">
                             New Password
                         </label>
                         <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-400" name="NewPassword" id="NewPassword" type="password" required>
                         <p class="py-2 text-gray-800 text-xs italic">Recommended: Longer than 8 characters with numbers, capital letters, and unique characters.</p>
+                        <input type="checkbox" id="notifications" class="form-checkbox h-4 w-4" onclick="myFunction()" value="0">
+                        <span class="ml-2 text-gray-800 text-sm italic font-bold">Show Password</span>
                     </div>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="NewLocation">
+                        <label class="block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2" for="NewLocation">
                             New Device Location (Nearest City or Town)
                         </label>
                         <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-400" name="NewLocation" id="NewLocation" type="text" required>
@@ -132,5 +134,14 @@
             window.alert("Data saved!")
         })
     })
+
+    function myFunction() {
+        var x = document.getElementById("NewPassword");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
 </script>
 </html>
