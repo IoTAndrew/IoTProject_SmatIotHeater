@@ -1,2 +1,1 @@
-# IoTProject
-For school
+The Smart thermostat’s main idea was to build a temperature controlling device that could be controlled from the internet. One of the main objectives was to save energy by setting a lower temperature when nobody is present at the device location. By making the temperature accessible from the internet, the device can be set to heat up the location by presetting the arrival time or just by selecting the heat up now option. 
