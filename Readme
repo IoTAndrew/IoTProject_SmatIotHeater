@@ -1,3 +1,10 @@
-The Smart thermostat’s main idea was to build a temperature controlling device that could be controlled from the internet. One of the main objectives was to save energy by setting a lower temperature when nobody is present at the device location. By making the temperature accessible from the internet, the device can be set to heat up the location by presetting the arrival time or just by selecting the heat up now option. 
+The Smart thermostat’s main idea was to build a temperature controlling device that could be controlled from the internet. One of the main objectives was to save energy by setting a lower temperature when nobody is present at the device location. By making the temperature accessible from the internet, the device can be set to heat up the location by presetting the arrival time or just by selecting the heat up now option.
+
+In this project, I was mainly responsible for the following: 
+- developing the node.js based back end
+- doing markup and (partly) styling of pages in front end
+- implementing jQuery features
+- building the user authentication system
+- testing the system
 
 Link to the paper: https://docs.google.com/document/d/1gSIPxLV6bT_rJExnHviaWyG_UB3f_2wv/edit?usp=sharing&ouid=112470416253468471699&rtpof=true&sd=true
